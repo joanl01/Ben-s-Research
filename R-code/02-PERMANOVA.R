@@ -1,5 +1,5 @@
 # Load required packages 
-pacman::p_load(readxl, tidyverse)
+pacman::p_load(readxl, tidyverse, vegan, PERMANOVA)
 # Read in dataset
 data_filtered<- read_excel(here::here("datasets", "JJ_DATA.xlsx"))
 # Remove the empty spaces
@@ -36,7 +36,7 @@ table(group_factor)
 
 
 # Perform PERMANOVA to test the effect of Sampling Group and Terrain Type
-permanova_results <- adonis2(species_data ~ group_factor, permutations = 999)
+permanova_results <- adonis2(species_data ~ `Sampling Group` * `Terrain Type`, data = data_filtered, permutations = 999)
 
 # Print the results
 print(permanova_results)
