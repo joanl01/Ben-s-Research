@@ -22,17 +22,13 @@ if(any(is.na(species_data))) {
 
 
 ###############################################################################
-
-# Select species abundance columns (P1 to P20)
-species_data <- data_filtered %>%
-  select(P1:P20) %>%
-  as.matrix()
+species_data <- species_data |> as.matrix()
 
 # Create a factor for Sampling Group and Terrain Type interaction
-group_factor <- interaction(data_filtered$`Sampling Group`, data_filtered$`Terrain Type`)
+# group_factor <- interaction(data_filtered$`Sampling Group`, data_filtered$`Terrain Type`)
 
 # Inspect the group factor
-table(group_factor)
+# table(group_factor)
 
 
 # Perform PERMANOVA to test the effect of Sampling Group and Terrain Type
