@@ -25,14 +25,14 @@ if(any(is.na(species_data))) {
 species_data <- species_data |> as.matrix()
 
 # Create a factor for Sampling Group and Terrain Type interaction
-group_factor <- interaction(data$`Sampling Group`, data$`Terrain Type`)
+group_factor <- interaction(data$`Sampling Group`, data$Habitat)
 
 # Inspect the group factor
 # table(group_factor)
 
 
 # Perform PERMANOVA to test the effect of Sampling Group and Terrain Type
-permanova_results <- adonis2(species_data ~ `Sampling Group` * `Terrain Type`, data = data, permutations = 999)
+permanova_results <- adonis2(species_data ~ `Sampling Group` * Habitat, data = data, permutations = 999)
 
 # Print the results
 print(permanova_results)
@@ -42,7 +42,7 @@ permanova_group <- adonis2(species_data ~ `Sampling Group`, data = data, permuta
 print(permanova_group)
 
 # Test the effect of Terrain Type
-permanova_terrain <- adonis2(species_data ~ `Terrain Type`, data = data, permutations = 999)
+permanova_terrain <- adonis2(species_data ~ Habitat, data = data, permutations = 999)
 print(permanova_terrain)
 
 
@@ -78,3 +78,4 @@ ggsave(here::here("pretty-pictures", "PCA-plot.pdf"),
        width = 12,
        height = 9,
        units = "in")
+

@@ -38,13 +38,13 @@ points(nmds_result, display="sites", cex=gof*100)
 nmds_data <- data.frame(nmds_result$points)
 nmds_data$group <- data_filtered$`Sampling Group`  # Add Sampling Group info (from filtered data)
 
-# add Terrain Type if to distinguish by terrain
-nmds_data$terrain <- data_filtered$`Terrain Type`
+# add Habitat if to distinguish by terrain
+nmds_data$habitat <- data_filtered$Habitat
 
 # Create the NMDS plot using ggplot
-ggplot(nmds_data, aes(x = MDS1, y = MDS2, color = group, shape = terrain)) +
+ggplot(nmds_data, aes(x = MDS1, y = MDS2, color = group, shape = habitat)) +
   geom_point(size = 4) + 
-  labs(title = "NMDS Plot", x = "NMDS1", y = "NMDS2", col = "Group", shape = "Terrain") +
+  labs(title = "NMDS Plot", x = "NMDS1", y = "NMDS2", col = "Sample Group", shape = "Habitat") +
   theme_bw() + theme(legend.position = "bottom", text = element_text(size = 20)) + 
   harrypotter::scale_color_hp(house = "ravenclaw", discrete = TRUE)
 # Save the NMDS plot in the figure directory
@@ -57,9 +57,9 @@ ggsave(here::here("pretty-pictures", "NMDS_plot.pdf"),
 
 
 # Create the NMDS plot using ggplot
-nmds_data |>  filter(group != "Semaphore") |> ggplot(aes(x = MDS1, y = MDS2, color = group, shape = terrain)) +
+nmds_data |>  filter(group != "Semaphore") |> ggplot(aes(x = MDS1, y = MDS2, color = group, shape = habitat)) +
   geom_point(size = 4) + 
-  labs(title = "NMDS Plot", x = "NMDS1", y = "NMDS2", col = "Group", shape = "Terrain") +
+  labs(title = "NMDS Plot", x = "NMDS1", y = "NMDS2", col = "Group", shape = "Habitat") +
   theme_bw() + theme(legend.position = "bottom", text = element_text(size = 20)) + 
   harrypotter::scale_color_hp(house = "ravenclaw", discrete = TRUE)
 # Save the NMDS plot in the figure directory
