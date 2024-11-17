@@ -26,6 +26,13 @@ bray_curtis <- vegdist(species_data, method = "bray")
 
 # Perform NMDS
 nmds_result <- metaMDS(bray_curtis, k = 2, trymax = 100)
+# Create Stress Plot
+stressplot(nmds_result)
+# Calculate Goodness of Fit
+gof <- goodness(nmds_result)
+
+plot(nmds_result, type="t", main = "Goodness of Fit")
+points(nmds_result, display="sites", cex=gof*100)
 
 # Create a dataframe for plotting with NMDS coordinates and group info
 nmds_data <- data.frame(nmds_result$points)
@@ -42,6 +49,21 @@ ggplot(nmds_data, aes(x = MDS1, y = MDS2, color = group, shape = terrain)) +
   harrypotter::scale_color_hp(house = "ravenclaw", discrete = TRUE)
 # Save the NMDS plot in the figure directory
 ggsave(here::here("pretty-pictures", "NMDS_plot.pdf"),
+       plot = last_plot(),
+       width = 16,
+       height = 9,
+       units = "in")
+
+
+
+# Create the NMDS plot using ggplot
+nmds_data |>  filter(group != "Semaphore") |> ggplot(aes(x = MDS1, y = MDS2, color = group, shape = terrain)) +
+  geom_point(size = 4) + 
+  labs(title = "NMDS Plot", x = "NMDS1", y = "NMDS2", col = "Group", shape = "Terrain") +
+  theme_bw() + theme(legend.position = "bottom", text = element_text(size = 20)) + 
+  harrypotter::scale_color_hp(house = "ravenclaw", discrete = TRUE)
+# Save the NMDS plot in the figure directory
+ggsave(here::here("pretty-pictures", "NMDS_plot_without_Semaphore.pdf"),
        plot = last_plot(),
        width = 16,
        height = 9,
